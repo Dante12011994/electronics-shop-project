@@ -16,3 +16,5 @@ def test_item():
     assert test1.name == 'Смартфон'
     Item.instantiate_from_csv()
     assert len(Item.all) == 5
+    assert repr(test1) == "Item('Смартфон', 2, 2)"
+    assert str(test1) == 'Смартфон'
