@@ -18,3 +18,5 @@ def test_item():
     assert len(Item.all) == 5
     assert repr(test1) == "Item('Смартфон', 2, 2)"
     assert str(test1) == 'Смартфон'
+    test2 = Item('test2', 1, 2)
+    assert test1 + test2 == 4
