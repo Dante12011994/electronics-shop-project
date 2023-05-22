@@ -1,6 +1,7 @@
 import csv
 import os
-
+class InstantiateCSVError(Exception):
+    pass
 
 class Item:
     """
@@ -56,12 +57,25 @@ class Item:
 
     @classmethod
     def instantiate_from_csv(cls):
-        with open(os.path.join('..', 'src', 'items.csv')) as file:
-            file = csv.DictReader(file)
-            for i in file:
-                Item.all.append(cls(i['name'], i['price'], i['quantity']))
+        try:
+            open(os.path.join('..', 'src', 'items.csv'))
+        except FileNotFoundError:
+            print('FileNotFoundError: Отсутствует файл item.csv')
+        else:
+            with open(os.path.join('..', 'src', 'items.csv')) as file:
+                file = csv.DictReader(file)
+                for i in file:
+                    if len(i) != 3:
+                        raise print('InstantiateCSVError: Файл item.csv поврежден')
+                    else:
+                        Item.all.append(cls(i['name'], i['price'], i['quantity']))
 
     @staticmethod
     def string_to_number(num):
         return int(float(num))
 
+    # def instantiate_from_csv(self):
+    #     try:
+    #         open(os.path.join('..', 'src', 'items.csv'))
+    #     except FileNotFoundError:
+    #         print("Файл не существует")
